@@ -18,3 +18,10 @@ create policy "Allow public read" on public.testimonies
 
 create policy "Allow insert" on public.testimonies
   for insert with check ( true );
+
+-- allow updates and deletes (client-admin gate handles UI access)
+create policy if not exists "Allow update" on public.testimonies
+  for update using ( true ) with check ( true );
+
+create policy if not exists "Allow delete" on public.testimonies
+  for delete using ( true );

@@ -24,3 +24,4 @@ Admin & Validation
 - Home lists only validated testimonies
 - Submit collects contact info
 - Admin page `/admin` with password gate and CRUD
+- Added RLS policies for update and delete on `public.testimonies`
