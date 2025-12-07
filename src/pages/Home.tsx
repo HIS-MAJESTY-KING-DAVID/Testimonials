@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 import { getSupabase } from '../shared/supabase'
 import { Testimony } from '../types'
 import TestimonyCard from '../shared/TestimonyCard'
+import AutoPlay from '../shared/AutoPlay'
 
 export default function Home() {
   const [items, setItems] = useState<Testimony[]>([])
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(true)
+  const [auto, setAuto] = useState(false)
   const pageSize = 8
 
   useEffect(() => {
@@ -53,7 +55,10 @@ export default function Home() {
             <div className="sub">IFA Church testimonies board</div>
           </div>
         </div>
-        <Link className="btn" to="/submit">Add Testimony</Link>
+        <div style={{ display:'flex', gap:8 }}>
+          <button className="btn outline" onClick={()=> setAuto(true)}>Play</button>
+          <Link className="btn" to="/submit">Add Testimony</Link>
+        </div>
       </div>
       {loading && (
         <>
@@ -73,6 +78,7 @@ export default function Home() {
         <button className="btn loadMore" onClick={loadMore}>Load More</button>
       )}
       <Link className="fab" to="/submit">＋ Add Testimony</Link>
+      {auto && <AutoPlay items={items} onClose={()=> setAuto(false)} />}
     </div>
   )
 }
