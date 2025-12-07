@@ -107,9 +107,11 @@ export default function Admin() {
                 </label>
               </div>
             </div>
-            <div className="text" style={{ marginBottom: 8 }}>
-              <textarea value={t.text || ''} onChange={(e)=> save(t.id, { text: e.target.value })} rows={5} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid var(--border)' }} />
-            </div>
+            {!t.video_url && !t.audio_url && (
+              <div className="text" style={{ marginBottom: 8 }}>
+                <textarea value={t.text || ''} onChange={(e)=> save(t.id, { text: e.target.value })} rows={5} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid var(--border)' }} />
+              </div>
+            )}
             {t.video_url && (
               <video className="media" src={t.video_url} controls />
             )}
