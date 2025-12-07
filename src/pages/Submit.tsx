@@ -16,6 +16,7 @@ export default function Submit() {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -92,9 +93,10 @@ export default function Submit() {
       setLoading(false)
       return
     }
-    setMsg('🎉 Congratulations! Your testimony was submitted. It will be visible after admin validation.')
+    setMsg('🎉 Congratulations! Your testimony was submitted.')
     setLoading(false)
-    setTimeout(()=> navigate('/'), 1800)
+    setShowModal(true)
+    setTimeout(()=> { setShowModal(false); navigate('/') }, 3000)
   }
 
   const humanizeStorageError = (m: string) => {
@@ -111,7 +113,16 @@ export default function Submit() {
 
   return (
     <div className="container">
-      <Confetti active={msg?.startsWith('🎉') || false} />
+      <Confetti active={showModal} duration={2800} />
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <div className="modal-title">Congratulations!</div>
+            <div>Your testimony was submitted.</div>
+            <div className="modal-note">It will be visible on the board after admin validation.</div>
+          </div>
+        </div>
+      )}
       <div className="hero">
         <div>
           <h2 className="title" style={{ fontSize: 28 }}>Share Your Testimony</h2>
@@ -161,7 +172,7 @@ export default function Submit() {
         )}
         <button className="btn" type="submit" disabled={loading}>{loading ? 'Submitting…' : 'Submit'}</button>
         {errors.general && <div className="sub" style={{color:'crimson'}}>{errors.general}</div>}
-        {msg && <div className="success">{msg}</div>}
+        {msg && !showModal && <div className="success">{msg} It will be visible after admin validation.</div>}
       </form>
     </div>
   )

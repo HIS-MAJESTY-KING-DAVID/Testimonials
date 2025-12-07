@@ -44,3 +44,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui
 .switch input::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
 .switch input:checked::after{transform:translateX(18px)}
 .success{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:12px;border-radius:12px;margin-top:12px}
+.modal{position:fixed;inset:0;background:rgba(14,18,26,.35);backdrop-filter:saturate(120%) blur(4px);display:flex;align-items:center;justify-content:center;z-index:10000}
+.modal-content{background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:540px;width:92%;padding:20px 18px;box-shadow:0 16px 40px rgba(16,24,40,.18);text-align:center}
+.modal-title{font-family:Playfair Display,serif;font-size:26px;margin:0 0 8px}
+.modal-note{color:var(--muted);margin-top:4px}

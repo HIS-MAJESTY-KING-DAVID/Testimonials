@@ -42,5 +42,5 @@ export default function Confetti({ active, duration = 1500 }: { active: boolean;
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
   }, [active, duration])
-  return <canvas ref={ref} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9999 }} />
+  return <canvas ref={ref} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9998 }} />
 }
