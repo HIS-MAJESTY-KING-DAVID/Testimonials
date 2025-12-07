@@ -1,0 +1,26 @@
+{
+  "name": "testimonials",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@supabase/mcp-server-supabase": "^0.5.9",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.2",
+    "@vitejs/plugin-react": "^4.3.3",
+    "dotenv": "^17.2.3",
+    "typescript": "^5.6.2",
+    "vite": "^7.2.6"
+  }
+}

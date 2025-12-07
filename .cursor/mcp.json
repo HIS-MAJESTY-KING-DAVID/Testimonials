@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "node",
+      "args": ["scripts/mcp-supabase.js"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_ad533e73e653bdd816590505bd7a8394c7a51a29"
+      }
+    }
+  }
+}
