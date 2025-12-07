@@ -46,9 +46,12 @@ export default function Home() {
   return (
     <div className="container">
       <div className="hero">
-        <div>
-          <h1 className="title">Testimonials</h1>
-          <div className="sub">IFA Church testimonies board</div>
+        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+          <img className="logo" src="/logo-ifa.png" alt="IFA Church" onError={(e)=>{e.currentTarget.src='/favicon.svg'}} />
+          <div>
+            <h1 className="title">Testimonials</h1>
+            <div className="sub">IFA Church testimonies board</div>
+          </div>
         </div>
         <Link className="btn" to="/submit">Add Testimony</Link>
       </div>
