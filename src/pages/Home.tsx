@@ -55,7 +55,7 @@ export default function Home() {
             <div className="sub">IFA Church testimonies board</div>
           </div>
         </div>
-        <div style={{ display:'flex', gap:8 }}>
+        <div className="hero-actions" style={{ display:'flex', gap:8 }}>
           <button className="btn outline" onClick={()=> setAuto(true)}>Play</button>
           <Link className="btn" to="/submit">Add Testimony</Link>
         </div>
