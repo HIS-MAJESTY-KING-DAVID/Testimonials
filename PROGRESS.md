@@ -25,3 +25,8 @@ Admin & Validation
 - Submit collects contact info
 - Admin page `/admin` with password gate and CRUD
 - Added RLS policies for update and delete on `public.testimonies`
+Enhancements
+- Added public insert policies on `storage.objects` for `photos` and `media`
+- Modal congrats + confetti on submission (3s before redirect)
+- IFA logo in header and favicon set
+- Autoplay overlay with Play button and media playback

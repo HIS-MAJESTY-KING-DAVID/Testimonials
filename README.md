@@ -7,6 +7,10 @@ Features
 - Uses Supabase free tier for database and storage
 - Deployable on free hosts like Netlify or Vercel
 - Admin validation page for approving testimonies
+- Only validated testimonies are visible on the Home page
+- Autoplay overlay (Play button) to cycle testimonies with media
+- Confetti + modal congratulations on submission
+- Branding: IFA logo in header, placeholder avatar for missing photos
 
 Setup
 - Create `.env` from `.env.example` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
@@ -17,7 +21,15 @@ Setup
 Admin
 - Open `/admin` and enter password
 - Password is stored as SHA-256 hash locally for verification
-- Approve/Revert/Delete and edit contact fields
+- Toggle Validate (switch), Delete, and edit contact fields
+- Manage text/audio/video testimonies (players visible for media)
+
+Database
+- Table `public.testimonies` includes: `phone`, `email`, `is_validated`
+- RLS policies:
+  - Public select/insert on `public.testimonies`
+  - Update/Delete enabled (UI is admin-gated)
+  - `storage.objects` public insert policies for `photos` and `media` buckets
 
 Scripts
 - `npm install`

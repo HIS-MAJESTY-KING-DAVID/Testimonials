@@ -16,6 +16,9 @@ export default function Admin() {
   const [items, setItems] = useState<Testimony[]>([])
   const [loading, setLoading] = useState(true)
   const [msg, setMsg] = useState<string| null>(null)
+  const [q, setQ] = useState('')
+  const [typeFilter, setTypeFilter] = useState<'all'|'text'|'audio'|'video'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all'|'validated'|'pending'>('all')
 
   useEffect(() => {
     const saved = localStorage.getItem('admin_auth_hash')
@@ -81,6 +84,20 @@ export default function Admin() {
     )
   }
 
+  const filtered = items.filter(t => {
+    if (statusFilter === 'validated' && !t.is_validated) return false
+    if (statusFilter === 'pending' && t.is_validated) return false
+    if (typeFilter === 'text' && (!!t.audio_url || !!t.video_url)) return false
+    if (typeFilter === 'audio' && !t.audio_url) return false
+    if (typeFilter === 'video' && !t.video_url) return false
+    const term = q.trim().toLowerCase()
+    if (term) {
+      const hay = `${t.name} ${t.text ?? ''} ${t.phone ?? ''} ${t.email ?? ''}`.toLowerCase()
+      if (!hay.includes(term)) return false
+    }
+    return true
+  })
+
   return (
     <div className="container">
       <div className="hero">
@@ -89,9 +106,24 @@ export default function Admin() {
           <div className="sub">Validate and manage testimonies</div>
         </div>
       </div>
+      <div className="toolbar">
+        <input className="search" placeholder="Search name, text, phone, email" value={q} onChange={(e)=> setQ(e.target.value)} />
+        <div className="group">
+          <button className="btn outline" onClick={()=> setTypeFilter('all')} style={{ opacity: typeFilter==='all'?1:.8 }}>All</button>
+          <button className="btn outline" onClick={()=> setTypeFilter('text')} style={{ opacity: typeFilter==='text'?1:.8 }}>Text</button>
+          <button className="btn outline" onClick={()=> setTypeFilter('audio')} style={{ opacity: typeFilter==='audio'?1:.8 }}>Audio</button>
+          <button className="btn outline" onClick={()=> setTypeFilter('video')} style={{ opacity: typeFilter==='video'?1:.8 }}>Video</button>
+        </div>
+        <div className="group">
+          <button className="btn outline" onClick={()=> setStatusFilter('all')} style={{ opacity: statusFilter==='all'?1:.8 }}>All</button>
+          <button className="btn outline" onClick={()=> setStatusFilter('validated')} style={{ opacity: statusFilter==='validated'?1:.8 }}>Validated</button>
+          <button className="btn outline" onClick={()=> setStatusFilter('pending')} style={{ opacity: statusFilter==='pending'?1:.8 }}>Pending</button>
+        </div>
+        <button className="btn" onClick={()=> { setQ(''); setTypeFilter('all'); setStatusFilter('all') }}>Reset</button>
+      </div>
       {loading && <div className="empty">Loading…</div>}
       <div className="grid">
-        {items.map((t)=> (
+        {filtered.map((t)=> (
           <div key={t.id} className="card">
             <div className="header">
               <img className="avatar" src={t.photo_url || '/avatar.svg'} alt={t.name} />

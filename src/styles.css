@@ -48,3 +48,6 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui
 .modal-content{background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:540px;width:92%;padding:20px 18px;box-shadow:0 16px 40px rgba(16,24,40,.18);text-align:center}
 .modal-title{font-family:Playfair Display,serif;font-size:26px;margin:0 0 8px}
 .modal-note{color:var(--muted);margin-top:4px}
+.toolbar{display:flex;gap:8;align-items:center;margin:12px 0 20px}
+.toolbar .search{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border)}
+.toolbar .group{display:flex;gap:8}
