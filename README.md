@@ -22,3 +22,12 @@ MCP Setup (Supabase)
 - Put it in `.cursor/mcp.json` under `SUPABASE_ACCESS_TOKEN` or set env
 - Start the MCP server: `node scripts/mcp-supabase.js`
 - Then use your IDE’s MCP tools to run `supabase/schema.sql`
+
+Deploy (Vercel)
+- Ensure the repository is pushed to GitHub
+- Import in Vercel dashboard and set env vars:
+  - `VITE_SUPABASE_URL`
+  - `VITE_SUPABASE_ANON_KEY`
+- Build command: `npm run build`
+- Output directory: `dist`
+- SPA routing is configured in `vercel.json`

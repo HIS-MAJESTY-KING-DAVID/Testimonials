@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { supabase } from '../shared/supabase'
+import { getSupabase } from '../shared/supabase'
 import { Testimony } from '../types'
 import TestimonyCard from '../shared/TestimonyCard'
 
@@ -12,7 +12,9 @@ export default function Home() {
 
   useEffect(() => {
     const load = async () => {
-      const { data } = await supabase
+      let client
+      try { client = getSupabase() } catch { setLoading(false); return }
+      const { data } = await client
         .from('testimonies')
         .select('*')
         .order('created_at', { ascending: false })
@@ -28,7 +30,8 @@ export default function Home() {
   const loadMore = async () => {
     const from = items.length
     const to = from + pageSize - 1
-    const { data } = await supabase
+    const client = getSupabase()
+    const { data } = await client
       .from('testimonies')
       .select('*')
       .order('created_at', { ascending: false })

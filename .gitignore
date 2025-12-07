@@ -10,3 +10,4 @@ Thumbs.db
 scripts/supabase-test-output.json
 coverage/
 *.cache
+.vercel/

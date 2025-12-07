@@ -1,7 +1,12 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL as string
-const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string
-if (!url) console.error('Missing VITE_SUPABASE_URL')
-if (!key) console.error('Missing VITE_SUPABASE_ANON_KEY')
-export const supabase = createClient(url, key)
+let client: SupabaseClient | null = null
+
+export const getSupabase = (): SupabaseClient => {
+  if (client) return client
+  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+  if (!url || !key) throw new Error('Missing Supabase environment variables')
+  client = createClient(url, key)
+  return client
+}

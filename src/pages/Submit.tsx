@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { supabase } from '../shared/supabase'
+import { getSupabase } from '../shared/supabase'
 
 type Mode = 'text' | 'video' | 'audio'
 
@@ -47,32 +47,34 @@ export default function Submit() {
     let photo_url: string | null = null
     let video_url: string | null = null
     let audio_url: string | null = null
+    let client
+    try { client = getSupabase() } catch { setMsg('Missing Supabase configuration'); setLoading(false); return }
 
     if (photo) {
       const key = `${Date.now()}-${photo.name}`
-      const { data, error } = await supabase.storage.from('photos').upload(key, photo, { upsert: false })
+      const { data, error } = await client.storage.from('photos').upload(key, photo, { upsert: false })
       if (error) {
         setMsg(humanizeStorageError(error.message))
         setLoading(false)
         return
       }
-      photo_url = supabase.storage.from('photos').getPublicUrl(data.path).data.publicUrl
+      photo_url = client.storage.from('photos').getPublicUrl(data.path).data.publicUrl
     }
 
     if (mode !== 'text' && media) {
       const key = `${Date.now()}-${media.name}`
-      const { data, error } = await supabase.storage.from('media').upload(key, media, { upsert: false })
+      const { data, error } = await client.storage.from('media').upload(key, media, { upsert: false })
       if (error) {
         setMsg(humanizeStorageError(error.message))
         setLoading(false)
         return
       }
-      const url = supabase.storage.from('media').getPublicUrl(data.path).data.publicUrl
+      const url = client.storage.from('media').getPublicUrl(data.path).data.publicUrl
       if (mode === 'video') video_url = url
       if (mode === 'audio') audio_url = url
     }
 
-    const { error: insertError } = await supabase.from('testimonies').insert({
+    const { error: insertError } = await client.from('testimonies').insert({
       name,
       photo_url,
       video_url,
