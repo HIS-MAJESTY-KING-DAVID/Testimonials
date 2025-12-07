@@ -7,7 +7,8 @@ const sha256 = async (s: string) => {
   return Array.from(new Uint8Array(d)).map(b=>b.toString(16).padStart(2,'0')).join('')
 }
 
-const ADMIN_HASH = 'c7b035d2dd48f2f0ffb44b89505aeb8f1bda0c1d1e8a78b9cb29245b0b1ee1ac' // SHA-256 of KDave237
+const ADMIN_PASSWORD = 'KDave237'
+let ADMIN_HASH: string | null = null
 
 export default function Admin() {
   const [auth, setAuth] = useState<boolean>(false)
@@ -18,7 +19,10 @@ export default function Admin() {
 
   useEffect(() => {
     const saved = localStorage.getItem('admin_auth_hash')
-    if (saved === ADMIN_HASH) setAuth(true)
+    if (saved) {
+      ADMIN_HASH = saved
+      setAuth(true)
+    }
   }, [])
 
   useEffect(() => {
@@ -33,6 +37,7 @@ export default function Admin() {
   }, [auth])
 
   const login = async () => {
+    if (!ADMIN_HASH) ADMIN_HASH = await sha256(ADMIN_PASSWORD)
     const h = await sha256(pw)
     if (h === ADMIN_HASH) {
       localStorage.setItem('admin_auth_hash', h)
@@ -94,7 +99,12 @@ export default function Admin() {
                 <input value={t.name} onChange={(e)=> save(t.id, { name: e.target.value })} style={{ fontWeight: 700, border: '1px solid var(--border)', borderRadius: 8, padding: 6 }} />
                 <div className="meta">{new Date(t.created_at).toLocaleString()}</div>
               </div>
-              <div style={{ marginLeft: 'auto' }} className="chip">{t.is_validated ? 'Validated' : 'Pending'}</div>
+              <div style={{ marginLeft: 'auto', display:'flex', alignItems:'center', gap:8 }}>
+                <span className="sub" style={{fontSize:12}}>{t.is_validated ? 'Validated' : 'Pending'}</span>
+                <label className="switch">
+                  <input type="checkbox" checked={t.is_validated} onChange={(e)=> approve(t.id, e.currentTarget.checked)} />
+                </label>
+              </div>
             </div>
             <div className="text" style={{ marginBottom: 8 }}>
               <textarea value={t.text || ''} onChange={(e)=> save(t.id, { text: e.target.value })} rows={5} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid var(--border)' }} />
@@ -103,8 +113,6 @@ export default function Admin() {
               <input placeholder="Phone" value={t.phone || ''} onChange={(e)=> save(t.id, { phone: e.target.value })} style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
               <input placeholder="Email" value={t.email || ''} onChange={(e)=> save(t.id, { email: e.target.value })} style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn" onClick={()=> approve(t.id, true)}>Approve</button>
-                <button className="btn outline" onClick={()=> approve(t.id, false)}>Revert</button>
                 <button className="btn outline" onClick={()=> remove(t.id)}>Delete</button>
               </div>
             </div>

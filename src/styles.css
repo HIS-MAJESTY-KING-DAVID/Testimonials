@@ -37,3 +37,8 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui
 .skeleton.card{height:160px}
 .skeleton.line{height:14px;margin-top:10px;border-radius:6px}
 @keyframes skeletonPulse{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.switch{display:flex;align-items:center;gap:8px}
+.switch input{appearance:none;width:42px;height:24px;border-radius:999px;background:#e5e7eb;position:relative;outline:none;cursor:pointer;transition:background .2s}
+.switch input:checked{background:var(--primary)}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.switch input:checked::after{transform:translateX(18px)}
