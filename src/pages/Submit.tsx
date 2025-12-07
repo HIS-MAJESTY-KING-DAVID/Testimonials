@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Confetti from '../shared/Confetti'
 import { getSupabase } from '../shared/supabase'
 
 type Mode = 'text' | 'video' | 'audio'
@@ -91,9 +92,9 @@ export default function Submit() {
       setLoading(false)
       return
     }
-    setMsg('Submitted successfully')
+    setMsg('🎉 Congratulations! Your testimony was submitted. It will be visible after admin validation.')
     setLoading(false)
-    navigate('/')
+    setTimeout(()=> navigate('/'), 1800)
   }
 
   const humanizeStorageError = (m: string) => {
@@ -110,6 +111,7 @@ export default function Submit() {
 
   return (
     <div className="container">
+      <Confetti active={msg?.startsWith('🎉') || false} />
       <div className="hero">
         <div>
           <h2 className="title" style={{ fontSize: 28 }}>Share Your Testimony</h2>
@@ -159,7 +161,7 @@ export default function Submit() {
         )}
         <button className="btn" type="submit" disabled={loading}>{loading ? 'Submitting…' : 'Submit'}</button>
         {errors.general && <div className="sub" style={{color:'crimson'}}>{errors.general}</div>}
-        {msg && <div className="sub" style={{color: msg.includes('success') ? 'green' : 'crimson'}}>{msg}</div>}
+        {msg && <div className="success">{msg}</div>}
       </form>
     </div>
   )
