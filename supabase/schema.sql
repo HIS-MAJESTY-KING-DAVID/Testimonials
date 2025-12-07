@@ -1,10 +1,13 @@
 create table if not exists public.testimonies (
   id uuid primary key default gen_random_uuid(),
   name text not null,
+  phone text,
+  email text,
   photo_url text,
   video_url text,
   audio_url text,
   text text,
+  is_validated boolean not null default false,
   created_at timestamptz not null default now()
 );
 

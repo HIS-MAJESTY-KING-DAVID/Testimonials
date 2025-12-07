@@ -6,12 +6,18 @@ Features
 - View all testimonies publicly
 - Uses Supabase free tier for database and storage
 - Deployable on free hosts like Netlify or Vercel
+- Admin validation page for approving testimonies
 
 Setup
 - Create `.env` from `.env.example` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
 - Ensure Supabase buckets `photos` and `media` exist and are public
 - Apply SQL in `supabase/schema.sql` to create `testimonies` table
 - Optional: run `supabase/storage.sql` to create buckets
+
+Admin
+- Open `/admin` and enter password
+- Password is stored as SHA-256 hash locally for verification
+- Approve/Revert/Delete and edit contact fields
 
 Scripts
 - `npm install`

@@ -19,3 +19,8 @@ UI Refresh
 - Redesigned home hero, grid, and cards
 - Styled submit page
 - Added load-more pagination and skeleton loaders
+Admin & Validation
+- Added `is_validated`, `phone`, and `email` columns via migration
+- Home lists only validated testimonies
+- Submit collects contact info
+- Admin page `/admin` with password gate and CRUD

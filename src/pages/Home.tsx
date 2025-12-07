@@ -17,6 +17,7 @@ export default function Home() {
       const { data } = await client
         .from('testimonies')
         .select('*')
+        .eq('is_validated', true)
         .order('created_at', { ascending: false })
         .range(0, pageSize - 1)
       const list = data || []
@@ -34,6 +35,7 @@ export default function Home() {
     const { data } = await client
       .from('testimonies')
       .select('*')
+      .eq('is_validated', true)
       .order('created_at', { ascending: false })
       .range(from, to)
     const list = data || []

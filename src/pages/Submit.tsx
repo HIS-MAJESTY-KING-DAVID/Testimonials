@@ -6,6 +6,8 @@ type Mode = 'text' | 'video' | 'audio'
 
 export default function Submit() {
   const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
   const [mode, setMode] = useState<Mode>('text')
   const [text, setText] = useState('')
@@ -76,10 +78,13 @@ export default function Submit() {
 
     const { error: insertError } = await client.from('testimonies').insert({
       name,
+      phone: phone || null,
+      email: email || null,
       photo_url,
       video_url,
       audio_url,
       text: mode === 'text' ? text : null,
+      is_validated: false,
     })
     if (insertError) {
       setMsg(humanizeDbError(insertError.message))
@@ -117,6 +122,14 @@ export default function Submit() {
           <div className="sub">Name</div>
           <input value={name} onChange={(e) => setName(e.target.value)} style={{ width: '100%', padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
           {errors.name && <div className="sub" style={{color:'crimson'}}>{errors.name}</div>}
+        </label>
+        <label>
+          <div className="sub">Phone</div>
+          <input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ width: '100%', padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
+        </label>
+        <label>
+          <div className="sub">Email</div>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
         </label>
         <label>
           <div className="sub">Photo</div>
