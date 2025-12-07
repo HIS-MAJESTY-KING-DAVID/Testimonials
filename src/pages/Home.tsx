@@ -47,8 +47,8 @@ export default function Home() {
     <div className="container">
       <div className="hero">
         <div>
-          <h1 className="title">Believers' Testimonies</h1>
-          <div className="sub">Stories of faith, hope, and transformation</div>
+          <h1 className="title">Testimonials</h1>
+          <div className="sub">IFA Church testimonies board</div>
         </div>
         <Link className="btn" to="/submit">Add Testimony</Link>
       </div>
