@@ -100,6 +100,7 @@ export default function Admin() {
                 <div className="meta">{new Date(t.created_at).toLocaleString()}</div>
               </div>
               <div style={{ marginLeft: 'auto', display:'flex', alignItems:'center', gap:8 }}>
+                <span className="chip" style={{ marginRight: 8 }}>{t.video_url ? 'Video' : t.audio_url ? 'Audio' : 'Text'}</span>
                 <span className="sub" style={{fontSize:12}}>{t.is_validated ? 'Validated' : 'Pending'}</span>
                 <label className="switch">
                   <input type="checkbox" checked={t.is_validated} onChange={(e)=> approve(t.id, e.currentTarget.checked)} />
@@ -109,6 +110,12 @@ export default function Admin() {
             <div className="text" style={{ marginBottom: 8 }}>
               <textarea value={t.text || ''} onChange={(e)=> save(t.id, { text: e.target.value })} rows={5} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid var(--border)' }} />
             </div>
+            {t.video_url && (
+              <video className="media" src={t.video_url} controls />
+            )}
+            {t.audio_url && (
+              <audio className="media" src={t.audio_url} controls />
+            )}
             <div style={{ display: 'grid', gap: 8 }}>
               <input placeholder="Phone" value={t.phone || ''} onChange={(e)=> save(t.id, { phone: e.target.value })} style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
               <input placeholder="Email" value={t.email || ''} onChange={(e)=> save(t.id, { email: e.target.value })} style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)' }} />
