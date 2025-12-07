@@ -19,6 +19,7 @@ export default function Admin() {
   const [q, setQ] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all'|'text'|'audio'|'video'>('all')
   const [statusFilter, setStatusFilter] = useState<'all'|'validated'|'pending'>('all')
+  const [filterSelect, setFilterSelect] = useState<'all'|'text'|'audio'|'video'|'validated'|'pending'>('all')
 
   useEffect(() => {
     const saved = localStorage.getItem('admin_auth_hash')
@@ -108,18 +109,28 @@ export default function Admin() {
       </div>
       <div className="toolbar">
         <input className="search" placeholder="Search name, text, phone, email" value={q} onChange={(e)=> setQ(e.target.value)} />
-        <div className="group">
-          <button className="btn outline" onClick={()=> setTypeFilter('all')} style={{ opacity: typeFilter==='all'?1:.8 }}>All</button>
-          <button className="btn outline" onClick={()=> setTypeFilter('text')} style={{ opacity: typeFilter==='text'?1:.8 }}>Text</button>
-          <button className="btn outline" onClick={()=> setTypeFilter('audio')} style={{ opacity: typeFilter==='audio'?1:.8 }}>Audio</button>
-          <button className="btn outline" onClick={()=> setTypeFilter('video')} style={{ opacity: typeFilter==='video'?1:.8 }}>Video</button>
-        </div>
-        <div className="group">
-          <button className="btn outline" onClick={()=> setStatusFilter('all')} style={{ opacity: statusFilter==='all'?1:.8 }}>All</button>
-          <button className="btn outline" onClick={()=> setStatusFilter('validated')} style={{ opacity: statusFilter==='validated'?1:.8 }}>Validated</button>
-          <button className="btn outline" onClick={()=> setStatusFilter('pending')} style={{ opacity: statusFilter==='pending'?1:.8 }}>Pending</button>
-        </div>
-        <button className="btn" onClick={()=> { setQ(''); setTypeFilter('all'); setStatusFilter('all') }}>Reset</button>
+        <select value={filterSelect} onChange={(e)=> {
+          const v = e.target.value as 'all'|'text'|'audio'|'video'|'validated'|'pending'
+          setFilterSelect(v)
+          if (v === 'validated' || v === 'pending') {
+            setStatusFilter(v)
+            setTypeFilter('all')
+          } else if (v === 'text' || v === 'audio' || v === 'video') {
+            setTypeFilter(v)
+            setStatusFilter('all')
+          } else {
+            setTypeFilter('all')
+            setStatusFilter('all')
+          }
+        }} style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)' }}>
+          <option value="all">All</option>
+          <option value="text">Text</option>
+          <option value="audio">Audio</option>
+          <option value="video">Video</option>
+          <option value="validated">Validated</option>
+          <option value="pending">Pending</option>
+        </select>
+        <button className="btn" onClick={()=> { setQ(''); setFilterSelect('all'); setTypeFilter('all'); setStatusFilter('all') }}>Reset</button>
       </div>
       {loading && <div className="empty">Loading…</div>}
       <div className="grid">
