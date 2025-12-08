@@ -133,9 +133,9 @@ export default function Admin() {
         <button className="btn" onClick={()=> { setQ(''); setFilterSelect('all'); setTypeFilter('all'); setStatusFilter('all') }}>Reset</button>
       </div>
       {loading && <div className="empty">Loading…</div>}
-      <div className="grid">
+      <div className="grid admin-grid">
         {filtered.map((t)=> (
-          <div key={t.id} className="card">
+          <div key={t.id} className="card admin-card">
             <div className="header">
               <img className="avatar" src={t.photo_url || '/avatar.svg'} alt={t.name} />
               <div>
